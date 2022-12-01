@@ -26,6 +26,10 @@ main(int argc, char **argv)
 			return 1;
 		}
 	}
+	if (fp != stdin && fclose(fp) == EOF) {
+		perror("fclose");
+		return 1;
+	}
 	for (i = 0; i <= arri; i++) {
 		if (arr[i] > max[0]) {
 			max[2] = max[1];
@@ -44,9 +48,5 @@ main(int argc, char **argv)
 		}
 	}
 	printf("%lu\n", max[0] + max[1] + max[2]);
-	if (fp != stdin && fclose(fp) == EOF) {
-		perror("fclose");
-		return 1;
-	}
 	return 0;
 }
