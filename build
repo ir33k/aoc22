@@ -5,8 +5,8 @@ CC="cc"
 CFLAGS="-Wall -Wextra -Wshadow -Wswitch-enum -pedantic -std=c89"
 
 $CC $CFLAGS -o 01a 01a.c
-./01a 01.in0
-./01a 01.in1
+expr $(./01a 01.in0) = 24000
+expr $(./01a 01.in1) = 68923
 $CC $CFLAGS -o 01b 01b.c
-./01b 01.in0
-./01b 01.in1
+expr $(./01b 01.in0) = 45000
+expr $(./01b 01.in1) = 200044
