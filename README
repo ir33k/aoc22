@@ -6,14 +6,11 @@ Build and run all programs:
 
 File naming convention:
 
-	01.in0          # Example input values of day 1
-	01.in1          # Final input values of day 1
-	01.in2          # Extra test input if needed
-	01a.c           # Source code of day 1 part 1
-	01a             # Compiled program of day 1 part 1
-	01b.c           # Source code of day 1 part 2
-	01b             # Compiled program of day 1 part 2
-
-	02.in0          # Example input values of day 2
-	02a.c           # Source code of day 2 part 1
-	                # ...
+	01          # Day number
+	  a         # Part 1
+	  b         # Part 2
+	   .c       # Source
+	            # No extension for binaries
+          .in0      # Input - test
+          .in1      # Input - final
+          .in2      # Input - extra if needed

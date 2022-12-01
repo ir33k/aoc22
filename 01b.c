@@ -1,36 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <err.h>
 
-#define SIZ	2056		/* Max number of Elfs */
+#define SIZ	1024		/* Max number of Elfs */
 
 int
 main(int argc, char **argv)
 {
-	size_t i, arri = 0;
+	int i = 0;
 	unsigned long int arr[SIZ] = {0}, max[3] = {0};
 	char buf[BUFSIZ];
 	FILE *fp = stdin;
 
 	if (argc > 1 && (fp = fopen(argv[1], "rb")) == NULL) {
-		perror("fopen");
-		return 1;
+		err(1, NULL);
 	}
 	while (fgets(buf, BUFSIZ, fp)) {
 		if (buf[0] != '\n') {
-			arr[arri] += atoi(buf);
+			arr[i] += atoi(buf);
 			continue;
 		}
-		arri++;
-		if (arri > SIZ) {
-			fprintf(stderr, "SIZ too small");
-			return 1;
+		if (++i > SIZ-1) {
+			errx(1, "SIZ too small");
 		}
 	}
 	if (fp != stdin && fclose(fp) == EOF) {
-		perror("fclose");
-		return 1;
+		err(1, NULL);
 	}
-	for (i = 0; i <= arri; i++) {
+	for (; i; i--) {
 		if (arr[i] > max[0]) {
 			max[2] = max[1];
 			max[1] = max[0];
