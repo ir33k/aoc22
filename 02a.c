@@ -3,48 +3,22 @@
 
 #define BSIZ    8		/* Buffer size */
 
-enum { ROCK = 0, PAPER, SCISSORS, LOST, DRAW, WON };
-int score[] = { 1, 2, 3, 0, 3, 6 }; /* Match enum */
-
-int
-parse(char c)
-{
-	switch (c) {
-	case 'A': case 'X': return ROCK;
-	case 'B': case 'Y': return PAPER;
-	case 'C': case 'Z': return SCISSORS;
-	}
-	errx(1, "Invalid shape '%c'", c);
-}
-
-int
-outcom(int p1, int p2)
-{
-	if (p1 == p2) return DRAW;
-
-	if ((p1 == ROCK     && p2 == PAPER)    ||
-	    (p1 == PAPER    && p2 == SCISSORS) ||
-	    (p1 == SCISSORS && p2 == ROCK))
-		return WON;
-
-	return LOST;
-}
-
 int
 main(int argc, char **argv)
 {
 	char buf[BSIZ];
 	FILE *fp = stdin;
-	int p1, p2, res = 0; /* Player 1, 2 shape, and final result */
+	int p1, p2, out, res = 0;
 
 	if (argc > 1 && !(fp = fopen(argv[1], "rb"))) {
 		err(1, NULL);
 	}
 	while (fgets(buf, BSIZ, fp)) {
-		p1 = parse(buf[0]);
-		p2 = parse(buf[2]);
-		res += score[p2];
-		res += score[outcom(p1, p2)];
+		p1   = buf[0] - 'A';	  /* Player1 shape number */
+		p2   = buf[2] - 'X';	  /* Player2 shape number */
+		res += p2 + 1;		  /* Player2 score */
+		out  = (p1 - p2 + 2) % 3; /* Outcome number */
+		res += out ? 6/out : 0;	  /* Outcome score */
 	}
 	if (fp != stdin && fclose(fp) == EOF) {
 		err(1, NULL);
