@@ -15,8 +15,8 @@
  * exit with 1 if there is any problem with file. */
 
 #include <stdio.h>
-#include <err.h>
 #include <string.h>
+#include <stdarg.h>
 #include <stdlib.h>		/* Not used, left for convenience */
 
 /* Predefine BSIZ if you need more than default BUFSIZ of stdio.h for
@@ -28,26 +28,45 @@
 void online(char *line);
 void onend(void);
 
+/* Stolen from https://git.suckless.org/dwm/file/util.c.html */
+void die(const char *fmt, ...)
+{
+	va_list ap;
+
+	va_start(ap, fmt);
+	vfprintf(stderr, fmt, ap);
+	va_end(ap);
+
+	if (fmt[0] && fmt[strlen(fmt)-1] == ':') {
+		fputc(' ', stderr);
+		perror(NULL);
+	} else {
+		fputc('\n', stderr);
+	}
+
+	exit(1);
+}
+
 int main(int argc, char **argv)
 {
 	char buf[BSIZ];
 	FILE *fp = stdin;
 
 	if (argc > 1 && !(fp = fopen(argv[1], "rb"))) {
-		err(1, NULL);
+		die("fopen:");
 	}
 	while (fgets(buf, BSIZ, fp)) {
 		/* String could actually end right on BSIZ limit but
 		 * with this condition I'm making whole thing simpler
 		 * by loosing only one potential character. */
 		if (strlen(buf) == BSIZ-1) {
-			errx(1, "Line longer than BSIZ, read doc");
+			die("Line longer than BSIZ, read doc");
 		}
 		online(buf);
 	}
 	onend();
 	if (fp != stdin && fclose(fp) == EOF) {
-		err(1, NULL);
+		die("fclose:");
 	}
 	return 0;
 }
