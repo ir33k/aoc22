@@ -4,7 +4,7 @@
 #define BSIZ    8		/* Buffer size */
 
 enum { ROCK = 0, PAPER, SCISSORS, LOST, DRAW, WON };
-int score[] = { 1, 2, 3, 0, 3, 6 };
+int score[] = { 1, 2, 3, 0, 3, 6 }; /* Match enum */
 
 int
 parse(char c)
@@ -38,6 +38,7 @@ main(int argc, char **argv)
 	int p1, p2, res = 0; /* Player 1, 2 shape, and final result */
 
 	if (argc > 1 && !(fp = fopen(argv[1], "rb"))) {
+		err(1, NULL);
 	}
 	while (fgets(buf, BSIZ, fp)) {
 		p1 = parse(buf[0]);
