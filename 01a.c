@@ -1,27 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <err.h>
+#include "online.h"
 
-int
-main(int argc, char **argv)
+int cur, max = 0;
+
+void online(char *line)
 {
-	int cur = 0, max = 0;
-	char buf[BUFSIZ];
-	FILE *fp = stdin;
-
-	if (argc > 1 && !(fp = fopen(argv[1], "rb"))) {
-		err(1, NULL);
+	if (line[0] == '\n') {
+		cur = 0;
+	} else if ((cur += atoi(line)) > max) {
+		max = cur;
 	}
-	while (fgets(buf, BUFSIZ, fp)) {
-		if (buf[0] == '\n') {
-			cur = 0;
-		} else if ((cur += atoi(buf)) > max) {
-			max = cur;
-		}
-	}
-	if (fp != stdin && fclose(fp) == EOF) {
-		err(1, NULL);
-	}
+}
+void onend()
+{
 	printf("%d\n", max);
-	return 0;
 }
