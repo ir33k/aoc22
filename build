@@ -4,9 +4,18 @@ set -ex			    # Stop on first error and log all commands
 CC="cc"
 CFLAGS="-Wall -Wextra -Wshadow -Wswitch-enum -pedantic -std=c89"
 
+# Day 1
 $CC $CFLAGS -o 01a 01a.c
 expr $(./01a 01.in0) = 24000
 expr $(./01a 01.in1) = 68923
 $CC $CFLAGS -o 01b 01b.c
 expr $(./01b 01.in0) = 45000
 expr $(./01b 01.in1) = 200044
+
+# Day 2
+$CC $CFLAGS -o 02a 02a.c
+expr $(./02a 02.in0) = 15
+expr $(./02a 02.in1) = 15572
+$CC $CFLAGS -o 02b 02b.c
+expr $(./02b 02.in0) = 12
+expr $(./02b 02.in1) = 16098
