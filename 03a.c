@@ -1,28 +1,25 @@
 #include "online.h"
 
-int res = 0, i, j, len, half;
-char sign;			/* Only for convenience */
+int res = 0, i, j, half;
 
+int cvalue(char c)
+{
+	return c >= 'a' ? c - 'a' + 1 : c - 'A' + 27;
+}
 void online(char *line)
 {
-	len = strlen(line);
-	half = len/2;
+	half = strlen(line)/2;
 	for (i = 0; i < half; i++) {
-		sign = line[i];
-		for (j = half; j < len; j++) {
-			if (sign != line[j]) {
+		for (j = half; line[j]; j++) {
+			if (line[i] != line[j]) {
 				continue;
 			}
-			if (sign >= 'a' && sign <= 'z') {
-				res += sign - 'a' + 1;
-			} else {
-				res += sign - 'A' + 27;
-			}
+			res += cvalue(line[i]);
 			/* Replace all instances of already found SIGN
 			 * with '_' to avoid duplicates.  We want to
 			 * cound each sign only once. */
-			for (; j < len; j++) {
-				if (sign == line[j]) {
+			for (; line[j]; j++) {
+				if (line[i] == line[j]) {
 					line[j] = '_';
 				}
 			}
