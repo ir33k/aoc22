@@ -10,9 +10,9 @@
  * When template is used then MAIN function is predefined.  User has
  * to define ONLINE and ONEND functions.  First is called each time
  * line from file is read and takes one argument that is pointer to
- * current line being null terminated string.  Second is called once
- * when all lines has been read and takes no arguments.  Program will
- * exit with 1 if there is any problem with file. */
+ * current line being null terminated string without end '\n'.  Second
+ * is called once when all lines has been read and takes no arguments.
+ * Program will exit with 1 if there is any problem with file. */
 
 #include <stdio.h>
 #include <string.h>
@@ -49,6 +49,7 @@ void die(const char *fmt, ...)
 
 int main(int argc, char **argv)
 {
+	size_t len;
 	char buf[BSIZ];
 	FILE *fp = stdin;
 
@@ -56,11 +57,15 @@ int main(int argc, char **argv)
 		die("fopen:");
 	}
 	while (fgets(buf, BSIZ, fp)) {
+		len = strlen(buf);
 		/* String could actually end right on BSIZ limit but
 		 * with this condition I'm making whole thing simpler
 		 * by loosing only one potential character. */
-		if (strlen(buf) == BSIZ-1) {
+		if (len == BSIZ-1) {
 			die("Line longer than BSIZ, read doc");
+		}
+		if (buf[len-1] == '\n') {
+			buf[len-1] = 0;
 		}
 		online(buf);
 	}

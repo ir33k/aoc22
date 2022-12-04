@@ -8,7 +8,7 @@ int cur = 0, max[3] = {0};
 
 void online(char *line)
 {
-	if (line[0] != '\n') {
+	if (line[0]) {
 		cur += atoi(line);
 		return;
 	} else if (cur > max[0]) {
