@@ -35,3 +35,11 @@ expr $(./04a <04.in1) = 580
 $CC $CFLAGS -o 04b 04b.c
 expr $(./04b <04.in0) = 4
 expr $(./04b <04.in1) = 895
+
+# Day 5
+$CC $CFLAGS -o 05a 05a.c
+expr $(./05a <05.in0) = CMZ
+expr $(./05a <05.in1) = QNHWJVJZW
+$CC $CFLAGS -o 05b 05b.c
+expr $(./05b <05.in0) = MCD
+expr $(./05b <05.in1) = BPCZJLFJW

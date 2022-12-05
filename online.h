@@ -23,7 +23,7 @@ int main(void)
 	size_t len;		/* LINE length */
 
 	while (fgets(line, BSIZ, stdin) && (len = strlen(line))) {
-		if (len >= BSIZ-2) {
+		if (len >= BSIZ-2) { /* TODO Explaing why -2? */
 			fputs("BSIZ is too small, read doc\n", stderr);
 			return 1;
 		}
