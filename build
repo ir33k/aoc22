@@ -27,3 +27,11 @@ expr $(./03a 03.in1) = 7875
 $CC $CFLAGS -o 03b 03b.c
 expr $(./03b 03.in0) = 70
 expr $(./03b 03.in1) = 2479
+
+# Day 4
+$CC $CFLAGS -o 04a 04a.c
+expr $(./04a 04.in0) = 2
+expr $(./04a 04.in1) = 580
+$CC $CFLAGS -o 04b 04b.c
+expr $(./04b 04.in0) = 4
+expr $(./04b 04.in1) = 895
