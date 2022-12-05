@@ -1,6 +1,6 @@
 #include "online.h"
 
-int res=0, a0, a1,  b0, b1;
+int res=0, a0, a1, b0, b1;
 
 void online(char *line)
 {

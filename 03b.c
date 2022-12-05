@@ -1,7 +1,6 @@
 #include "online.h"
 
-enum { FOUND = -1 };
-int res = 0, i = 0, j;
+int res=0, i=0, j;
 char lines[2][BSIZ];
 
 int cvalue(char c)
@@ -15,24 +14,22 @@ void online(char *line)
 		strcpy(lines[i++], line);
 		return;		/* Continue online */
 	}
-	for (i = 0; line[i]; i++) {
-		for (j = 0; lines[0][j]; j++) {
-			if (line[i] != lines[0][j]) {
+	for (i = 0; line[i]; i++)
+	for (j = 0; lines[0][j]; j++) {
+		if (line[i] != lines[0][j]) {
+			continue;
+		}
+		for (j = 0; lines[1][j]; j++) {
+			if (line[i] != lines[1][j]) {
 				continue;
 			}
-			for (j = 0; lines[1][j]; j++) {
-				if (line[i] != lines[1][j]) {
-					continue;
-				}
-				res += cvalue(line[i]);
-				j = FOUND;
-				break;
-			}
+			res += cvalue(line[i]); /* Found */
+			/* Force end of first loop. */
+			while (line[++i]);
+			i--;
 			break;
 		}
-		if (j == FOUND) {
-			break;
-		}
+		break;
 	}
 	i = 0;
 }
