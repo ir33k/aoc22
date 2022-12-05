@@ -16,7 +16,6 @@
 
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
 #include <stdlib.h>		/* Not used, left for convenience */
 
 /* Predefine BSIZ if you need more than default BUFSIZ of stdio.h for
@@ -28,25 +27,6 @@
 void online(char *line);
 void onend(void);
 
-/* Stolen from https://git.suckless.org/dwm/file/util.c.html */
-void die(const char *fmt, ...)
-{
-	va_list ap;
-
-	va_start(ap, fmt);
-	vfprintf(stderr, fmt, ap);
-	va_end(ap);
-
-	if (fmt[0] && fmt[strlen(fmt)-1] == ':') {
-		fputc(' ', stderr);
-		perror(NULL);
-	} else {
-		fputc('\n', stderr);
-	}
-
-	exit(1);
-}
-
 int main(int argc, char **argv)
 {
 	size_t len;
@@ -54,7 +34,8 @@ int main(int argc, char **argv)
 	FILE *fp = stdin;
 
 	if (argc > 1 && !(fp = fopen(argv[1], "rb"))) {
-		die("fopen:");
+		perror("fopen");
+		return 1;
 	}
 	while (fgets(buf, BSIZ, fp)) {
 		len = strlen(buf);
@@ -62,7 +43,8 @@ int main(int argc, char **argv)
 		 * with this condition I'm making whole thing simpler
 		 * by loosing only one potential character. */
 		if (len == BSIZ-1) {
-			die("Line longer than BSIZ, read doc");
+			fputs("BSIZ is too small, read doc\n", stderr);
+			return 1;
 		}
 		if (buf[len-1] == '\n') {
 			buf[len-1] = 0;
@@ -71,7 +53,8 @@ int main(int argc, char **argv)
 	}
 	onend();
 	if (fp != stdin && fclose(fp) == EOF) {
-		die("fclose:");
+		perror("fclose");
+		return 1;
 	}
 	return 0;
 }
