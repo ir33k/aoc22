@@ -3,6 +3,7 @@
  * program a lot simpler so I will allowe it ^-^ */
 
 #include "online.h"
+#include <stdlib.h>
 
 int cur = 0, max[3] = {0};
 

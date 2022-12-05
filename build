@@ -6,32 +6,32 @@ CFLAGS="-Wall -Wextra -Wshadow -Wswitch-enum -pedantic -std=c89"
 
 # Day 1
 $CC $CFLAGS -o 01a 01a.c
-expr $(./01a 01.in0) = 24000
-expr $(./01a 01.in1) = 68923
+expr $(./01a <01.in0) = 24000
+expr $(./01a <01.in1) = 68923
 $CC $CFLAGS -o 01b 01b.c
-expr $(./01b 01.in0) = 45000
-expr $(./01b 01.in1) = 200044
+expr $(./01b <01.in0) = 45000
+expr $(./01b <01.in1) = 200044
 
 # Day 2
 $CC $CFLAGS -o 02a 02a.c
-expr $(./02a 02.in0) = 15
-expr $(./02a 02.in1) = 15572
+expr $(./02a <02.in0) = 15
+expr $(./02a <02.in1) = 15572
 $CC $CFLAGS -o 02b 02b.c
-expr $(./02b 02.in0) = 12
-expr $(./02b 02.in1) = 16098
+expr $(./02b <02.in0) = 12
+expr $(./02b <02.in1) = 16098
 
 # Day 3
 $CC $CFLAGS -o 03a 03a.c
-expr $(./03a 03.in0) = 157
-expr $(./03a 03.in1) = 7875
+expr $(./03a <03.in0) = 157
+expr $(./03a <03.in1) = 7875
 $CC $CFLAGS -o 03b 03b.c
-expr $(./03b 03.in0) = 70
-expr $(./03b 03.in1) = 2479
+expr $(./03b <03.in0) = 70
+expr $(./03b <03.in1) = 2479
 
 # Day 4
 $CC $CFLAGS -o 04a 04a.c
-expr $(./04a 04.in0) = 2
-expr $(./04a 04.in1) = 580
+expr $(./04a <04.in0) = 2
+expr $(./04a <04.in1) = 580
 $CC $CFLAGS -o 04b 04b.c
-expr $(./04b 04.in0) = 4
-expr $(./04b 04.in1) = 895
+expr $(./04b <04.in0) = 4
+expr $(./04b <04.in1) = 895

@@ -1,4 +1,5 @@
 #include "online.h"
+#include <stdlib.h>
 
 int cur, max = 0;
 
