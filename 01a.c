@@ -1,17 +1,19 @@
-#include "online.h"
+#include <stdio.h>
 #include <stdlib.h>
 
-int cur, max = 0;
+int
+main(void)
+{
+	char line[BUFSIZ];
+	int cur, max=0;
 
-void online(char *line)
-{
-	if (!line[0]) {
-		cur = 0;
-	} else if ((cur += atoi(line)) > max) {
-		max = cur;
+	while (fgets(line, BUFSIZ, stdin)) {
+		if (line[0] == '\n') {
+			cur = 0;
+		} else if ((cur += atoi(line)) > max) {
+			max = cur;
+		}
 	}
-}
-void onend()
-{
 	printf("%d\n", max);
+	return 0;
 }

@@ -1,30 +1,35 @@
-#include "online.h"
+#include <stdio.h>
+#include <string.h>
 
-int res=0, i=0;
-char lines[2][BSIZ];
-
-int cvalue(char c)
+int
+cvalue(char c)
 {
 	return c >= 'a' ? c - 'a' + 1 : c - 'A' + 27;
 }
-void online(char *line)
+
+int
+main(void)
 {
-	if (i != 2) {
-		/* Collect previous 2 lines. */
-		strcpy(lines[i++], line);
-		return;		/* Continue online */
-	}
-	i = 0;
-	/* Treat LINE as pointer to single char. */
-	for (; *line; line += 1) {
-		if (strchr(lines[0], *line) &&
-		    strchr(lines[1], *line)) {
-			res += cvalue(*line);
-			break;
+	char line[BUFSIZ];
+	int res=0, i=0;
+	char lines[2][BUFSIZ];
+
+	while (fgets(line, BUFSIZ, stdin)) {
+		if (i != 2) {
+			/* Collect previous 2 lines. */
+			strcpy(lines[i++], line);
+			continue;
 		}
+		/* Treat LINE as pointer to single char. */
+		for (i = 0; line[i]; i++) {
+			if (strchr(lines[0], line[i]) &&
+			    strchr(lines[1], line[i])) {
+				res += cvalue(line[i]);
+				break;
+			}
+		}
+		i = 0;
 	}
-}
-void onend()
-{
 	printf("%d\n", res);
+	return 0;
 }
