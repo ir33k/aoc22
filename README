@@ -12,5 +12,5 @@ File naming convention:
 	   .c       # Source
 	            # No extension for binaries
           .in0      # Input - test
-          .in1      # Input - final
-          .in2      # Input - extra if needed
+          .in1      # Input - another teast example
+          .in2      # Input - final is last

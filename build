@@ -43,3 +43,19 @@ expr $(./05a <05.in1) = QNHWJVJZW
 $CC $CFLAGS -o 05b 05b.c
 expr $(./05b <05.in0) = MCD
 expr $(./05b <05.in1) = BPCZJLFJW
+
+# Day 6
+$CC $CFLAGS -o 06a 06a.c
+expr $(./06a <06.in0) = 7
+expr $(./06a <06.in1) = 5
+expr $(./06a <06.in2) = 6
+expr $(./06a <06.in3) = 10
+expr $(./06a <06.in4) = 11
+expr $(./06a <06.in5) = 1300
+$CC $CFLAGS -o 06b 06b.c
+expr $(./06b <06.in0) = 19
+expr $(./06b <06.in1) = 23
+expr $(./06b <06.in2) = 23
+expr $(./06b <06.in3) = 29
+expr $(./06b <06.in4) = 26
+expr $(./06b <06.in5) = 3986
