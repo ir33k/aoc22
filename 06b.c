@@ -7,6 +7,8 @@
 
 #define LAST	14		/* Number of chars we compare */
 
+/* Remove first LIST item and move everything -1 index to make place
+ * at the end for NEW char. */
 void
 push(char *list, size_t siz, char new)
 {
@@ -39,15 +41,12 @@ main(void)
 	size_t i;
 	char sign, last[LAST];
 
+	/* Fill LAST list with first character so it's not empty. */
 	sign = getchar();
 	for (i = 0; i < LAST; i++) {
 		last[i] = sign;
 	}
 	for (i = 2; (sign = getchar()) != EOF; i++) {
-		/* Ignore new lines and other invalid char. */
-		if (sign < 'a' || sign > 'z') {
-			continue;
-		}
 		push(last, LAST, sign);
 		if (diff(last, LAST)) {
 			break;
