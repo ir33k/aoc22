@@ -36,26 +36,16 @@ int
 main(void)
 {
 	char line[BUFSIZ], stack[COUNT][SIZ]={""}, crate;
-	int flag=0, move, from, to;
+	int move, from, to;
 	size_t i, len;
 
 	while (fgets(line, BUFSIZ, stdin)) {
 		/* Toggle from first to second stage. */
 		if (line[0] == '\n') {
-			flag = 1;
 			for (i = 0; i < COUNT; i++) {
 				reverse(stack[i]);
 			}
-			continue;
-		}
-		/* Move crates. */
-		if (flag) {
-			sscanf(line, "move %d from %d to %d",
-			       &move, &from, &to);
-			while (move--) {
-				push(stack[to-1], pull(stack[from-1]));
-			}
-			continue;
+			break;
 		}
 		/* Get stack map. */
 		len = strlen(line);
@@ -64,6 +54,13 @@ main(void)
 			if (crate != ' ' && crate > '9') {
 				push(stack[i], crate);
 			}
+		}
+	}
+	while (fgets(line, BUFSIZ, stdin)) {
+		sscanf(line, "move %d from %d to %d",
+		       &move, &from, &to);
+		while (move--) {
+			push(stack[to-1], pull(stack[from-1]));
 		}
 	}
 	/* Print result. */
