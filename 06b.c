@@ -1,57 +1,32 @@
-/* Its the same code as for first part except the value of LAST is
- * different.  Not sure how to cleanly handle that cases because I
- * already decided to have each part as separate programs. */
-
+/* Same code as in first part except the value of SIZ macro. */
 #include <stdio.h>
-#include <string.h>
 
-#define LAST	14		/* Number of chars we compare */
-
-/* Remove first LIST item and move everything -1 index to make place
- * at the end for NEW char. */
-void
-push(char *list, size_t siz, char new)
-{
-	size_t i;
-
-	for (i = 1; i < siz; i++) {
-		list[i-1] = list[i];
-	}
-	list[i-1] = new;
-}
+#define SIZ	14		/* Number values to compare */
 
 /* Return non 0 value if all values in LIST of SIZ are different. */
 int
-diff(char *list, size_t siz)
+diff(char *list, int siz)
 {
-	size_t i, j;
+	int i, j;
 
-	for (i = 0;   i < siz; i++)
-	for (j = i+1; j < siz; j++) {
-		if (list[i] == list[j]) {
-			return 0;
+	for (i = 0;   i < siz-1; i++)
+	for (j = i+1; j < siz;   j++) {
+		if (!list[j] || list[i] == list[j]) {
+			return 0; /* Not different */
 		}
 	}
-	return 1;
+	return 1;		/* All different */
 }
 
 int
 main(void)
 {
-	size_t i;
-	char sign, last[LAST];
+	int i;
+	char c, last[SIZ]={0};
 
-	/* Fill LAST list with first character so it's not empty. */
-	sign = getchar();
-	for (i = 0; i < LAST; i++) {
-		last[i] = sign;
+	while ((c = getchar()) != EOF && !diff(last, SIZ)) {
+		last[i++ % SIZ] = c;
 	}
-	for (i = 2; (sign = getchar()) != EOF; i++) {
-		push(last, LAST, sign);
-		if (diff(last, LAST)) {
-			break;
-		}
-	}
-	printf("%lu\n", i);
+	printf("%d\n", i);
 	return 0;
 }

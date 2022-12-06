@@ -39,15 +39,14 @@ main(void)
 	int move, from, to;
 	size_t i, len;
 
+	/* Get stack map. */
 	while (fgets(line, BUFSIZ, stdin)) {
-		/* Toggle from first to second stage. */
 		if (line[0] == '\n') {
 			for (i = 0; i < COUNT; i++) {
 				reverse(stack[i]);
 			}
-			break;
+			break;	/* End parsing map here. */
 		}
-		/* Get stack map. */
 		len = strlen(line);
 		for (i = 0; i < len; i++) {
 			crate = line[i*4+1];
@@ -56,8 +55,8 @@ main(void)
 			}
 		}
 	}
+	/* Move crates. */
 	while (fgets(line, BUFSIZ, stdin)) {
-		/* Move crates. */
 		sscanf(line, "move %d from %d to %d",
 		       &move, &from, &to);
 		for (i = 0; (int)i < move; i++) {
