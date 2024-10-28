@@ -13,37 +13,43 @@ Initial speed tests on MacOS of current solution:
 	user	0m0.001s
 	sys	0m0.001s
 
+2024.10.28 Mon 13:58
+
+Yep, improvement works but on MacOS it's not that noticeable because
+original implementation was already very fast.  Only with calls to
+clock() function I was able to see the difference.  Old code took
+around 218 clock cycles but new implementation takes around 7 to 9.
+That's significant.
+
 */
 #include <stdio.h>
-#include <string.h>
 #include <unistd.h>
-
-#define SIZ	14		/* Number values to compare */
-
-/* Return non 0 value if all values in LIST of SIZ are different. */
-int
-diff(char *list, int siz)
-{
-	int i, j;
-
-	for (i = 0;   i < siz-1; i++)
-	for (j = i+1; j < siz;   j++) {
-		if (!list[j] || list[i] == list[j]) {
-			return 0;	/* Not different */
-		}
-	}
-	return 1;	/* All different */
-}
-
+#include <time.h>
 
 int
 main(void)
 {
-	unsigned i=0;
-	char c, last[SIZ]={0};
-	while ((c = getchar()) != EOF && !diff(last, SIZ)) {
-		last[i++ % SIZ] = c;
-	}
-	printf("%u\n", i);
+	unsigned mask=0, b;
+	char buf[4096], *pt=buf;
+	/* clock_t since; */
+	read(0, buf, sizeof(buf));
+	/* since = clock(); */
+start:	mask = 0;
+	b = 1 << (pt[13]-'a');  /* First char is always unique */      mask |= b;
+	b = 1 << (pt[12]-'a');  if (mask & b) { pt+=13; goto start; }  mask |= b;
+	b = 1 << (pt[11]-'a');  if (mask & b) { pt+=12; goto start; }  mask |= b;
+	b = 1 << (pt[10]-'a');  if (mask & b) { pt+=11; goto start; }  mask |= b;
+	b = 1 << (pt[ 9]-'a');  if (mask & b) { pt+=10; goto start; }  mask |= b;
+	b = 1 << (pt[ 8]-'a');  if (mask & b) { pt+= 9; goto start; }  mask |= b;
+	b = 1 << (pt[ 7]-'a');  if (mask & b) { pt+= 8; goto start; }  mask |= b;
+	b = 1 << (pt[ 6]-'a');  if (mask & b) { pt+= 7; goto start; }  mask |= b;
+	b = 1 << (pt[ 5]-'a');  if (mask & b) { pt+= 6; goto start; }  mask |= b;
+	b = 1 << (pt[ 4]-'a');  if (mask & b) { pt+= 5; goto start; }  mask |= b;
+	b = 1 << (pt[ 3]-'a');  if (mask & b) { pt+= 4; goto start; }  mask |= b;
+	b = 1 << (pt[ 2]-'a');  if (mask & b) { pt+= 3; goto start; }  mask |= b;
+	b = 1 << (pt[ 1]-'a');  if (mask & b) { pt+= 2; goto start; }  mask |= b;
+	b = 1 << (pt[ 0]-'a');  if (mask & b) { pt+= 1; goto start; }  mask |= b;
+	/* printf("%lu\n", clock() - since); */
+	printf("%lu\n", pt - buf + 14);
 	return 0;
 }

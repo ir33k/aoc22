@@ -20,7 +20,7 @@ diff(char *list, int siz)
 int
 main(void)
 {
-	int i;
+	int i=0;
 	char c, last[SIZ]={0};
 
 	while ((c = getchar()) != EOF && !diff(last, SIZ)) {
